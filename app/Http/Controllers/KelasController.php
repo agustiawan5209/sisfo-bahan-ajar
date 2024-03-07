@@ -16,7 +16,9 @@ class KelasController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Kelas/Index', [
-            'kelas' => Kelas::paginate(10),
+            'kelas' => Kelas::when(Request::input('search') ?? null, function($query,$search){
+                $query->where('nama','LIKE','%'.$search.'%');
+            })->paginate(10),
         ]);
     }
 

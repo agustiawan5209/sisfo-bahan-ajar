@@ -1,3 +1,29 @@
+<script setup>
+import UserDropdown from "@/Components/DropdownNavbar.vue";
+import NavLink from "@/Components/NavLink.vue";
+import { Link, usePage } from '@inertiajs/vue3'
+import { ref } from 'vue'
+
+const collapseShow = ref('hidden');
+const isActive = ref(true);
+
+function toggleCollapseShow(classes) {
+    collapseShow.value = classes;
+}
+const user = usePage().props.auth;
+
+console.log(user)
+
+
+function role_exist(role){
+    if(user.role.indexOf(role) !== -1){
+        return true;
+    }else{
+        return false;
+    }
+}
+</script>
+
 <template>
     <nav
         class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -70,7 +96,7 @@
                         </NavLink>
                     </li>
 
-                    <li class="items-center">
+                    <li class="items-center" v-if="role_exist('guru')">
                         <NavLink :href="route('Guru.Siswa.index')" :active="route().current('Guru.Siswa.index')">
                             <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
                                 <font-awesome-icon :icon="['fas', 'school']" />
@@ -79,12 +105,12 @@
                         </NavLink>
                     </li>
 
-                    <li class="items-center">
-                        <NavLink href="#tables">
+                    <li class="items-center"  v-if="role_exist('admin')">
+                        <NavLink :href="route('Admin.Kelas.index')">
                             <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
                                 <font-awesome-icon :icon="['fas', 'table']" />
 
-                                Tables
+                                Kelas
                             </span>
                         </NavLink>
                     </li>
@@ -106,26 +132,4 @@
 </template>
 
 
-<script>
-import UserDropdown from "@/Components/DropdownNavbar.vue";
-import NavLink from "@/Components/NavLink.vue";
-import { Link } from '@inertiajs/vue3'
-export default {
-    data() {
-        return {
-            collapseShow: "hidden",
-            isActive: true
-        };
-    },
-    methods: {
-        toggleCollapseShow: function (classes) {
-            this.collapseShow = classes;
-        },
-    },
-    components: {
-        UserDropdown,
-        Link,
-        NavLink,
-    },
-};
-</script>
+

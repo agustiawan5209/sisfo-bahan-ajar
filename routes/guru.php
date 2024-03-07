@@ -19,7 +19,7 @@ use Inertia\Inertia;
 
 
 Route::group(['middleware'=> ['role:guru']],function () {
-    Route::group(['prefix'=> 'data-guru', 'as'=> 'Guru.'], function(){
+    Route::group(['prefix'=> 'data', 'as'=> 'Guru.'], function(){
         Route::group(['prefix'=> 'siswa', 'as'=> 'Siswa.'], function(){
             Route::controller(SiswaController::class)->group(function(){
                 Route::get('/', 'index')->name('index');
@@ -28,6 +28,5 @@ Route::group(['middleware'=> ['role:guru']],function () {
     });
 });
 
-require __DIR__.'/auth.php';
 
 // Guru
