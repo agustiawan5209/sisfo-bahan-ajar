@@ -1,327 +1,385 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
-import { gsap } from 'gsap';
+import PortfolioVue from '@/Components/Portfolio.vue'
+import VideosDivVue from '@/Components/VideosDiv.vue'
 
-// SVG
-// import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
-// gsap.registerPlugin(DrawSVGPlugin);
-
-// Motion
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-
-gsap.registerPlugin(MotionPathPlugin);
-
-const showMenu = ref(false);
-const textone = ref(null)
-
-// GSAP fungsi
-// onMounted(() => {
-//   gsap.from(textone.value, {
-//     x: -1000,
-//     duration: 1,
-//   });
-// });
-
-// Animasi Text Mengetik
-const textContainer = ref(null);
-const typedText = ref("");
-
-
-// SVG animasi infinite
-const svgRef = ref(null);
-const gifOne = ref(null)
-onMounted(() => {
-    const text = "Pengajaran Siswa";
-    const textArray = text.split("");
-
-    let index = 0;
-
-    function typeText() {
-        if (index < textArray.length) {
-            typedText.value += textArray[index];
-            index++;
-            gsap.delayedCall(0.1, typeText);
-        }
-    }
-    typeText();
-    setInterval(function () {
-        typedText.value = ""
-        index = 0;
-        typeText();
-    }, 5000)
-
-    // Text Paragraph
-    gsap.fromTo(textContainer.value, {
-        opacity: 0,
-    }, {
-        opacity: 1,
-        duration: 2,
-        delay: 0.5
-    })
-
-    gsap.fromTo(svgRef.value, {
-        y: "0%",
-
-    },
-        {
-            y: "3%",
-            duration: 4,
-            ease: "bounce.out",
-            repeat: -1,
-        }
-    );
-    gsap.fromTo(gifOne.value, {
-        x: '-40%',
-    }, {
-        x: '0%',
-        duration: 4,
-        ease: "bounce.out",
-    })
-});
+var navbarDropw = false;
 </script>
 
 <template>
-
     <Head title="Welcome" />
-    <main>
-        <section class="w-full px-6 pb-12 antialiased bg-neutral">
-            <div class="mx-auto max-w-7xl">
-
-                <nav class="relative z-50 h-24 select-none">
-                    <div
-                        class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
-                        <div class="flex items-center justify-start w-1/4 h-full pr-4">
-                            <a href="#_" class="inline-block py-4 md:py-0">
-                                <span class="p-1 text-xl font-black leading-none text-primary">MATERI PELAJARAN.</span>
-                            </a>
-                        </div>
-                        <div class="top-0 left-0 items-start hidden w-full h-full p-4 text-sm bg-gray-900 bg-opacity-50 md:items-center md:w-3/4 lg:text-base md:bg-transparent md:p-0 md:relative md:flex"
-                            :class="{ 'flex fixed': showMenu, 'hidden': !showMenu }">
-                            <div
-                                class="flex-col w-full h-auto overflow-hidden bg-neutral rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row">
-                                <a href="#_"
-                                    class="items-center block w-auto h-16 px-6 text-xl font-black leading-none text-primary md:hidden">PT.
-                                    MATERI PELAJARAN.<span class="text-secondary">.</span></a>
-                                <div
-                                    class="flex flex-col items-start justify-end w-full pt-4 md:items-center md:w-1/3 md:flex-row md:py-0">
-                                    <Link :href="route('login')"
-                                        class="w-full px-3 py-2 mr-0 text-primary md:mr-2 lg:mr-3 md:w-auto">Masuk
-                                    </Link>
-                                    <Link :href="route('register')"
-                                        class="inline-flex items-center w-full px-6 py-3 text-sm font-medium leading-4 text-white bg-secondary md:px-3 md:w-auto md:rounded-full lg:px-5 hover:bg-primary focus:outline-none md:focus:ring-2 focus:ring-0 focus:ring-offset-2 focus:ring-secondary transition-all ease-linear">
-                                    Daftar</Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="showMenu = !showMenu"
-                            class="absolute right-0 flex flex-col items-end justify-center w-10 h-10 bg-neutral rounded-full cursor-pointer md:hidden hover:bg-gray-100">
-                            <svg class="w-6 h-6 text-primary" x-show="!showMenu" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"
-                                x-cloak>
-                                <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
-                            <svg class="w-6 h-6 text-primary" x-show="showMenu" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" x-cloak>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </div>
+    <header class="flex w-full items-center bg-white">
+        <div class="container mx-auto">
+            <div class="relative -mx-4 flex items-center justify-between">
+                <div class="w-60 max-w-full px-4">
+                    <a href="javascript:void(0)" class="block w-full py-5">
+                        <img :src="'images/logo/logo.svg'" alt="logo" class="" />
+                    </a>
+                </div>
+                <div class="flex w-full items-center justify-between px-4">
+                    <div>
+                        <button @click="navbarDropw = !navbarDropw" type="button"
+                            class="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] text-white bg-emerald-600 ring-emerald-600 focus:ring-2 lg:hidden">
+                            <span class="relative my-[6px] block h-[2px] w-[30px] bg-black-primary"></span>
+                            <span class="relative my-[6px] block h-[2px] w-[30px] bg-black-primary"></span>
+                            <span class="relative my-[6px] block h-[2px] w-[30px] bg-black-primary"></span>
+                        </button>
+                        <nav :class="navbarDropw ? '' : 'hidden'"
+                            class="absolute right-4 top-full w-full max-w-[250px] rounded-lg bg-white px-6 py-5 shadow lg:static lg:block lg:w-full lg:max-w-full lg:shadow-none ">
+                            <ul class="block lg:flex">
+                                <li>
+                                    <a href="javascript:void(0)"
+                                        class="flex py-2 text-base font-medium text-black-primary hover:text-black lg:ml-12 lg:inline-flex">
+                                        Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"
+                                        class="flex py-2 text-base font-medium text-black-primary hover:text-black lg:ml-12 lg:inline-flex">
+                                        Payment
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"
+                                        class="flex py-2 text-base font-medium text-black-primary hover:text-black lg:ml-12 lg:inline-flex">
+                                        Features
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-                </nav>
+                    <div class="hidden justify-end pr-16 sm:flex lg:pr-0">
+                        <Link :href="route('login')"
+                            class="px-7 py-3 text-base font-medium text-black hover:text-emerald-600 ">
+                            Login
+                        </Link>
+                        <a href="javascript:void(0)"
+                            class="rounded-md bg-emerald-600 px-7 py-3 text-base font-medium text-white hover:bg-emerald-600">
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-                <!-- Main Hero Content -->
-                <div
-                    class="container max-w-lg flex flex-wrap px-4 md:py-32 mx-auto mt-px text-left md:max-w-none md:text-center">
-                    <div class="w-1/2 h-max box-border relative">
-                        <h1 ref="textone"
-                            class="text-one text-3xl font-extrabold leading-10 tracking-tight text-left text-primary md:text-center sm:leading-none md:text-6xl ">
-                            <img class="absolute -z-10" :src="'/svg/sssplatter.svg'" />
-                            <span class="inline md:block">SISTEM INFORMASI</span> <span
-                                class="relative mb-6 text-transparent bg-clip-text bg-gradient-to-br from-secondary to-primary md:inline-block">{{
-                                typedText }}</span>
+    <!-- ====== Hero Section Start -->
+    <div class="relative bg-white pb-5 pt-7 dark:bg-dark lg:pt-14">
+        <div class="container mx-auto">
+            <div class="-mx-4 flex flex-wrap items-center">
+                <div class="w-full px-4 lg:w-5/12">
+                    <div class="hero-content">
+                        <h1
+                            class="mb-5 text-4xl font-bold !leading-[1.208] text-dark  sm:text-[42px] lg:text-[40px] xl:text-5xl">
+                            The Greatest <br />
+                            Journey Of Online <br />
+                            Payment.
                         </h1>
-                        <div ref="textContainer"
-                            class="mx-auto mt-7 z-50 text-secondary md:mt-12 md:max-w-lg md:text-center lg:text-4xl capitalize">
-                            ............................
-                        </div>
-                    </div>
-                    <div class="w-1/2 h-full relative ">
-                        <img ref="svgRef" class="md:absolute  md:-top-28  drop-shadow-2xl"
-                            :src="'/images/bendy-language-learning-in-mobile-app.gif'" alt="Svg Timbangan">
-                    </div>
-                </div>
-                <!-- End Main Hero Content -->
-
-                <section class="py-8">
-                    <div class="container mx-auto">
-                        <div class="p-4 mx-auto text-center md:px-10 lg:px-32 xl:max-w-3xl">
-                            <h2 class="text-2xl font-bold leadi sm:text-4xl">Fitur-Fitur Sistem Informasi Materi Guru?
-                            </h2>
-                            <p class="px-8 my-4">Sistem Informasi Materi Guru hadir untuk membantu guru dalam mengelola
-                                materi pembelajaran dan siswa dalam mengakses materi dan mengerjakan tugas. Berikut
-                                adalah beberapa fitur utama yang tersedia di sistem ini</p>
-                        </div>
-                        <div class="grid grid-cols-6 p-4">
-                            <div
-                                class="flex justify-center px-4 col-span-full md:col-span-1 md:flex-col md:justify-start md:items-start">
-                                <button
-                                    class="px-2 text-xs md:text-sm border-b-2 md:border-l-2 md:border-b-0 md:py-3 border-gray-700 text-gray-600">Manajemen
-                                    Materi</button>
-                                <button
-                                    class="px-2 text-xs md:text-sm py-1 border-b-2 md:border-l-2 md:border-b-0 md:py-3 border-secondary text-gray-900">Pembuatan
-                                    Tugas dan Evaluasi</button>
-                                <button
-                                    class="px-2 text-xs md:text-sm py-1 border-b-2 md:border-l-2 md:border-b-0 md:py-3 border-gray-700 text-gray-600">Analisis
-                                    dan Laporan</button>
-                                <button
-                                    class="px-2 text-xs md:text-sm py-1 border-b-2 md:border-l-2 md:border-b-0 md:py-3 border-gray-700 text-gray-600">Akses
-                                    Materi</button>
-                                <button
-                                    class="px-2 text-xs md:text-sm py-1 border-b-2 md:border-l-2 md:border-b-0 md:py-3 border-gray-700 text-gray-600">Pengisian
-                                    Tugas</button>
-                            </div>
-                            <div
-                                class="grid gap-12 py-4 text-center sm:grid-cols-2 col-span-full md:col-span-4 md:text-left">
-                                <div class="flex flex-row items-center justify-center gap-3">
-                                    <font-awesome-icon class="text-secondary w-6 h-6" :icon="['fas', 'laptop-file']" />
-                                    <h5 class="text-lg font-semibold">Buat materi dalam bentuk teks dan file (PDF, Word,
-                                        PowerPoint, dll.)</h5>
-                                </div>
-                                <div class="flex flex-row items-center justify-center gap-3">
-                                    <font-awesome-icon class="text-secondary w-6 h-6" :icon="['fas', 'book-tanakh']" />
-                                    <h5 class="text-lg font-semibold">Kategorikan materi berdasarkan mata pelajaran,
-                                        kelas, dan topik.</h5>
-                                </div>
-                                <div class="flex flex-row items-center justify-center gap-3">
-                                    <font-awesome-icon class="text-secondary w-6 h-6" :icon="['fas', 'sliders']" />
-                                    <h5 class="text-lg font-semibold">Edit dan hapus materi dengan mudah.</h5>
-                                </div>
+                        <p class="mb-8 max-w-[480px] text-base text-black-primary ">
+                            With TailGrids, business and students thrive together. Business
+                            can perfectly match their staffing to changing demand throughout
+                            the dayed.
+                        </p>
+                        <ul class="flex flex-wrap items-center">
+                            <li>
+                                <a href="javascript:void(0)"
+                                    class="inline-flex items-center justify-center rounded-md bg-emerald-600 px-6 py-3 text-center text-base font-medium text-white hover:bg-blue-dark lg:px-7">
+                                    Get Started
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"
+                                    class="inline-flex items-center justify-center px-5 py-3 text-center text-base font-medium text-[#464646] hover:text-emerald-600 ">
+                                    <span class="mr-2">
+                                        <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12.6152" r="12" fill="#3758F9" />
+                                            <rect x="7.99893" y="14.979" width="8.18182" height="1.63636" fill="white" />
+                                            <rect x="11.2717" y="7.61523" width="1.63636" height="4.09091" fill="white" />
+                                            <path d="M12.0898 14.1606L14.9241 11.0925H9.25557L12.0898 14.1606Z"
+                                                fill="white" />
+                                        </svg>
+                                    </span>
+                                    Download App
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="clients pt-16">
+                            <h6 class="mb-6 flex items-center text-xs font-normal text-black-primary ">
+                                Some Of Our Clients
+                                <span class="ml-3 inline-block h-px w-8 bg-body-color"></span>
+                            </h6>
+                            <div class="flex items-center gap-4 xl:gap-[50px]">
+                                <a href="javascript:void(0)" class="block py-3">
+                                    <img :src="'images/brands/oracle.svg'" alt="oracle" />
+                                </a>
+                                <a href="javascript:void(0)" class="block py-3">
+                                    <img :src="'images/brands/intel.svg'" alt="intel" />
+                                </a>
+                                <a href="javascript:void(0)" class="block py-3">
+                                    <img :src="'images/brands/logitech.svg'" alt="logitech" />
+                                </a>
                             </div>
                         </div>
                     </div>
-                </section>
-
-
-                <section class="d">
-                    <div
-                        class="container flex flex-col justify-center p-6 mx-auto sm:py-8 lg:py-12 lg:flex-row lg:justify-between relative">
-                        <div
-                            class="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
-                            <img ref="gifOne" :src="'/images/vivid-classes-at-the-university.gif'" alt=""
-                                class="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
-                        </div>
-                        <div
-                            class="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-2xl lg:text-left">
-                            <h1 class="text-xl md:text-3xl font-bold leading-9">Daftar untuk menggunakan Sistem Informasi Materi
-                                Guru dan rasakan manfaatnya dalam meningkatkan kualitas pembelajaran!
-                            </h1>
-                            <p class="mt-6 mb-8 text-sm md:text-lg sm:mb-12">
-                                Kontak:
-
-                                Email: URL email
-
-                                Nomor Telepon: URL nomor telepon
-
-                                Website:
-
-                                https://www.website.com/
-
-                                Media Sosial:
-
-                                Facebook: URL Facebook
-
-                                Instagram: URL Instagram
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </section>
-
-        <section class="bg-neutral">
-            <div class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
-                <nav class="flex flex-wrap justify-center -mx-5 -my-2">
-                    <div class="px-5 py-2">
-                        <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                            About
-                        </a>
-                    </div>
-                    <div class="px-5 py-2">
-                        <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                            Blog
-                        </a>
-                    </div>
-                    <div class="px-5 py-2">
-                        <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                            Team
-                        </a>
-                    </div>
-                    <div class="px-5 py-2">
-                        <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                            Pricing
-                        </a>
-                    </div>
-                    <div class="px-5 py-2">
-                        <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                            Contact
-                        </a>
-                    </div>
-                    <div class="px-5 py-2">
-                        <a href="#" class="text-base leading-6 text-gray-500 hover:text-gray-900">
-                            Terms
-                        </a>
-                    </div>
-                </nav>
-                <div class="flex justify-center mt-8 space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Facebook</span>
-                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Instagram</span>
-                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Twitter</span>
-                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">GitHub</span>
-                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Dribbble</span>
-                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
                 </div>
-                <p class="mt-8 text-base leading-6 text-center text-gray-400">
-                    &copy; 2021 SomeCompany, Inc. All rights reserved.
-                </p>
+                <div class="hidden px-4 lg:block lg:w-1/12"></div>
+                <div class="w-full px-4 lg:w-6/12">
+                    <div class="lg:ml-auto lg:text-right">
+                        <div class="relative z-10 inline-block pt-11 lg:pt-0">
+                            <img :src="'images/hero/hero-image-01.png'" alt="hero" class="max-w-full lg:ml-auto" />
+                            <span class="absolute -bottom-8 -left-8 z-[-1]">
+                                <svg width="93" height="93" viewBox="0 0 93 93" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="2.5" cy="2.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="2.5" cy="24.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="2.5" cy="46.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="2.5" cy="68.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="2.5" cy="90.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="24.5" cy="2.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="24.5" cy="24.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="24.5" cy="46.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="24.5" cy="68.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="24.5" cy="90.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="46.5" cy="2.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="46.5" cy="24.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="46.5" cy="46.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="46.5" cy="68.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="46.5" cy="90.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="68.5" cy="2.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="68.5" cy="24.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="68.5" cy="46.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="68.5" cy="68.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="68.5" cy="90.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="90.5" cy="2.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="90.5" cy="24.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="90.5" cy="46.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="90.5" cy="68.5" r="2.5" fill="#3056D3" />
+                                    <circle cx="90.5" cy="90.5" r="2.5" fill="#3056D3" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </div>
+    <!-- ====== Hero Section End -->
 
-    </main>
+    <PortfolioVue />
+    <!-- <VideosDivVue /> -->
+
+    <!-- ====== Footer Section Start -->
+  <footer class="relative z-10 bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
+    <div class="container mx-auto">
+      <div class="-mx-4 flex flex-wrap">
+        <div class="w-full px-4 sm:w-2/3 lg:w-3/12">
+          <div class="mb-10 w-full">
+            <a href="javascript:void(0)" class="mb-6 inline-block max-w-[160px]">
+              <img :src="'/images/logo/logo.svg'" alt="logo" class="max-w-full " />
+            </a>
+            <p class="mblack-pritext-black-primaryase text-bodblue-y-color">
+              Sed ut perspiciatis undmnis is iste natus error sit amet
+              voluptatem totam rem aperiam.
+            </p>
+            <p class="flex items-center text-sm font-medium text-dark ">
+              <span class="mr-3 text-primary">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_941_15626)">
+                    <path
+                      d="M15.1875 19.4688C14.3438 19.4688 13.375 19.25 12.3125 18.8438C10.1875 18 7.84377 16.375 5.75002 14.2813C3.65627 12.1875 2.03127 9.84377 1.18752 7.68752C0.250019 5.37502 0.343769 3.46877 1.43752 2.40627C1.46877 2.37502 1.53127 2.34377 1.56252 2.31252L4.18752 0.750025C4.84377 0.375025 5.68752 0.562525 6.12502 1.18752L7.96877 3.93753C8.40627 4.59378 8.21877 5.46877 7.59377 5.90627L6.46877 6.68752C7.28127 8.00002 9.59377 11.2188 13.2813 13.5313L13.9688 12.5313C14.5 11.7813 15.3438 11.5625 16.0313 12.0313L18.7813 13.875C19.4063 14.3125 19.5938 15.1563 19.2188 15.8125L17.6563 18.4375C17.625 18.5 17.5938 18.5313 17.5625 18.5625C17 19.1563 16.1875 19.4688 15.1875 19.4688ZM2.37502 3.46878C1.78127 4.12503 1.81252 5.46877 2.50002 7.18752C3.28127 9.15627 4.78127 11.3125 6.75002 13.2813C8.68752 15.2188 10.875 16.7188 12.8125 17.5C14.5 18.1875 15.8438 18.2188 16.5313 17.625L18.0313 15.0625C18.0313 15.0313 18.0313 15.0313 18.0313 15L15.2813 13.1563C15.2813 13.1563 15.2188 13.1875 15.1563 13.2813L14.4688 14.2813C14.0313 14.9063 13.1875 15.0938 12.5625 14.6875C8.62502 12.25 6.18752 8.84377 5.31252 7.46877C4.90627 6.81252 5.06252 5.96878 5.68752 5.53128L6.81252 4.75002V4.71878L4.96877 1.96877C4.96877 1.93752 4.93752 1.93752 4.90627 1.96877L2.37502 3.46878Z"
+                      fill="currentColor" />
+                    <path
+                      d="M18.3125 8.90633C17.9375 8.90633 17.6563 8.62508 17.625 8.25008C17.375 5.09383 14.7813 2.56258 11.5938 2.34383C11.2188 2.31258 10.9063 2.00008 10.9375 1.59383C10.9688 1.21883 11.2813 0.906333 11.6875 0.937583C15.5625 1.18758 18.7188 4.25008 19.0313 8.12508C19.0625 8.50008 18.7813 8.84383 18.375 8.87508C18.375 8.90633 18.3438 8.90633 18.3125 8.90633Z"
+                      fill="currentColor" />
+                    <path
+                      d="M15.2187 9.18755C14.875 9.18755 14.5625 8.93755 14.5312 8.56255C14.3437 6.87505 13.0312 5.56255 11.3437 5.3438C10.9687 5.31255 10.6875 4.93755 10.7187 4.56255C10.75 4.18755 11.125 3.9063 11.5 3.93755C13.8437 4.2188 15.6562 6.0313 15.9375 8.37505C15.9687 8.75005 15.7187 9.0938 15.3125 9.1563C15.25 9.18755 15.2187 9.18755 15.2187 9.18755Z"
+                      fill="currentColor" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_941_15626">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </span>
+              <span>+012 (345) 678 99</span>
+            </p>
+          </div>
+        </div>
+        <div class="w-full px-4 sm:w-1/2 lg:w-2/12">
+          <div class="mb-10 w-full">
+            <h4 class="mb-9 text-lg font-semibold text-dark ">
+              Resources
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  SaaS Development
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Our Products
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  User Flow
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  User Strategy
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-full px-4 sm:w-1/2 lg:w-2/12">
+          <div class="mb-10 w-full">
+            <h4 class="mb-9 text-lg font-semibold text-dark ">
+              Company
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  About TailGrids
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Contact & Support
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Success History
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Setting & Privacy
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-full px-4 sm:w-1/2 lg:w-2/12">
+          <div class="mb-10 w-full">
+            <h4 class="mb-9 text-lg font-semibold text-dark ">
+              Quick Links
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Premium Support
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Our Services
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Know Our Team
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)"
+                  class="inline-block text-base leading-loose text-black-primary hover:text-emerald-600">
+                  Download App
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-full px-4 sm:w-1/2 lg:w-3/12">
+          <div class="mb-10 w-full">
+            <h4 class="mb-9 text-lg font-semibold text-dark ">
+              Follow Us On
+            </h4>
+            <div class="mb-6 flex items-center">
+              <a href="javascript:void(0)"
+                class="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3  dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4">
+                <svg width="8" height="16" viewBox="0 0 8 16" class="fill-current">
+                  <path
+                    d="M7.43902 6.4H6.19918H5.75639V5.88387V4.28387V3.76774H6.19918H7.12906C7.3726 3.76774 7.57186 3.56129 7.57186 3.25161V0.516129C7.57186 0.232258 7.39474 0 7.12906 0H5.51285C3.76379 0 2.54609 1.44516 2.54609 3.5871V5.83226V6.34839H2.10329H0.597778C0.287819 6.34839 0 6.63226 0 7.04516V8.90323C0 9.26452 0.243539 9.6 0.597778 9.6H2.05902H2.50181V10.1161V15.3032C2.50181 15.6645 2.74535 16 3.09959 16H5.18075C5.31359 16 5.42429 15.9226 5.51285 15.8194C5.60141 15.7161 5.66783 15.5355 5.66783 15.3806V10.1419V9.62581H6.13276H7.12906C7.41688 9.62581 7.63828 9.41935 7.68256 9.10968V9.08387V9.05806L7.99252 7.27742C8.01466 7.09677 7.99252 6.89032 7.85968 6.68387C7.8154 6.55484 7.61614 6.42581 7.43902 6.4Z" />
+                </svg>
+              </a>
+              <a href="javascript:void(0)"
+                class="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3  dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4">
+                <svg width="16" height="12" viewBox="0 0 16 12" class="fill-current">
+                  <path
+                    d="M14.2194 2.06654L15.2 0.939335C15.4839 0.634051 15.5613 0.399217 15.5871 0.2818C14.8129 0.704501 14.0903 0.845401 13.6258 0.845401H13.4452L13.3419 0.751468C12.7226 0.258317 11.9484 0 11.1226 0C9.31613 0 7.89677 1.36204 7.89677 2.93542C7.89677 3.02935 7.89677 3.17025 7.92258 3.26419L8 3.73386L7.45806 3.71037C4.15484 3.61644 1.44516 1.03327 1.00645 0.587084C0.283871 1.76125 0.696774 2.88845 1.13548 3.59296L2.0129 4.90802L0.619355 4.20352C0.645161 5.18982 1.05806 5.96477 1.85806 6.52838L2.55484 6.99804L1.85806 7.25636C2.29677 8.45401 3.27742 8.94716 4 9.13503L4.95484 9.36986L4.05161 9.93346C2.60645 10.8728 0.8 10.8024 0 10.7319C1.62581 11.7652 3.56129 12 4.90323 12C5.90968 12 6.65806 11.9061 6.83871 11.8356C14.0645 10.2857 14.4 4.41487 14.4 3.2407V3.07632L14.5548 2.98239C15.4323 2.23092 15.7935 1.8317 16 1.59687C15.9226 1.62035 15.8194 1.66732 15.7161 1.6908L14.2194 2.06654Z" />
+                </svg>
+              </a>
+              <a href="javascript:void(0)"
+                class="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3  dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4">
+                <svg width="16" height="12" viewBox="0 0 16 12" class="fill-current">
+                  <path
+                    d="M15.6645 1.88018C15.4839 1.13364 14.9419 0.552995 14.2452 0.359447C13.0065 6.59222e-08 8 0 8 0C8 0 2.99355 6.59222e-08 1.75484 0.359447C1.05806 0.552995 0.516129 1.13364 0.335484 1.88018C0 3.23502 0 6 0 6C0 6 0 8.79263 0.335484 10.1198C0.516129 10.8664 1.05806 11.447 1.75484 11.6406C2.99355 12 8 12 8 12C8 12 13.0065 12 14.2452 11.6406C14.9419 11.447 15.4839 10.8664 15.6645 10.1198C16 8.79263 16 6 16 6C16 6 16 3.23502 15.6645 1.88018ZM6.4 8.57143V3.42857L10.5548 6L6.4 8.57143Z" />
+                </svg>
+              </a>
+              <a href="javascript:void(0)"
+                class="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-dark-3  dark:hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4">
+                <svg width="14" height="14" viewBox="0 0 14 14" class="fill-current">
+                  <path
+                    d="M13.0214 0H1.02084C0.453707 0 0 0.451613 0 1.01613V12.9839C0 13.5258 0.453707 14 1.02084 14H12.976C13.5432 14 13.9969 13.5484 13.9969 12.9839V0.993548C14.0422 0.451613 13.5885 0 13.0214 0ZM4.15142 11.9H2.08705V5.23871H4.15142V11.9ZM3.10789 4.3129C2.42733 4.3129 1.90557 3.77097 1.90557 3.11613C1.90557 2.46129 2.45002 1.91935 3.10789 1.91935C3.76577 1.91935 4.31022 2.46129 4.31022 3.11613C4.31022 3.77097 3.81114 4.3129 3.10789 4.3129ZM11.9779 11.9H9.9135V8.67097C9.9135 7.90323 9.89082 6.8871 8.82461 6.8871C7.73571 6.8871 7.57691 7.74516 7.57691 8.60323V11.9H5.51254V5.23871H7.53154V6.16452H7.55423C7.84914 5.62258 8.50701 5.08065 9.52785 5.08065C11.6376 5.08065 12.0232 6.43548 12.0232 8.2871V11.9H11.9779Z" />
+                </svg>
+              </a>
+            </div>
+            <p class="text-black hover:text-black-primary">
+              &copy; 2025 TailGrids
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <span class="absolute bottom-0 left-0 z-[-1]">
+        <svg width="217" height="229" viewBox="0 0 217 229" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M-64 140.5C-64 62.904 -1.096 1.90666e-05 76.5 1.22829e-05C154.096 5.49924e-06 217 62.904 217 140.5C217 218.096 154.096 281 76.5 281C-1.09598 281 -64 218.096 -64 140.5Z"
+            fill="url(#paint0_linear_1179_5)" />
+          <defs>
+            <linearGradient id="paint0_linear_1179_5" x1="76.5" y1="281" x2="76.5" y2="1.22829e-05"
+              gradientUnits="userSpaceOnUse">
+              <stop stop-color="#3056D3" stop-opacity="0.08" />
+              <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+      <span class="absolute right-10 top-10 z-[-1]">
+        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M37.5 -1.63918e-06C58.2107 -2.54447e-06 75 16.7893 75 37.5C75 58.2107 58.2107 75 37.5 75C16.7893 75 -7.33885e-07 58.2107 -1.63918e-06 37.5C-2.54447e-06 16.7893 16.7893 -7.33885e-07 37.5 -1.63918e-06Z"
+            fill="url(#paint0_linear_1179_4)" />
+          <defs>
+            <linearGradient id="paint0_linear_1179_4" x1="-1.63917e-06" y1="37.5" x2="75" y2="37.5"
+              gradientUnits="userSpaceOnUse">
+              <stop stop-color="#13C296" stop-opacity="0.31" />
+              <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+    </div>
+  </footer>
+  <!-- ====== Footer Section End -->
 </template>
 
-<style></style>
