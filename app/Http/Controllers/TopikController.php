@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Topik;
+use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreTopikRequest;
 use App\Http\Requests\UpdateTopikRequest;
 
 class TopikController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Topik/Index', [
+            'kelas' => Topik::paginate(10),
+        ]);
     }
 
     /**
@@ -29,7 +33,9 @@ class TopikController extends Controller
      */
     public function store(StoreTopikRequest $request)
     {
-        //
+        $topik = Topik::create($request->all());
+
+        return redirect(route('Admin.Topik.index'))->with('success', 'Berhasil Di Tambah');
     }
 
     /**
@@ -37,7 +43,9 @@ class TopikController extends Controller
      */
     public function show(Topik $topik)
     {
-        //
+        return Inertia::render('Admin/Topik/Show', [
+            'kelas' => Topik::find(Request::input('slug')),
+        ]);
     }
 
     /**
@@ -53,7 +61,9 @@ class TopikController extends Controller
      */
     public function update(UpdateTopikRequest $request, Topik $topik)
     {
-        //
+        $topik = Topik::find(Request::input('slug'))->update($request->all());
+
+        return redirect(route('Admin.Topik.index'))->with('success', 'Berhasil Di Edit');
     }
 
     /**
@@ -61,6 +71,8 @@ class TopikController extends Controller
      */
     public function destroy(Topik $topik)
     {
-        //
+         $topik = Topik::find(Request::input('slug'))->delete();
+
+        return redirect(route('Admin.Topik.index'))->with('success', 'Berhasil Di hapus');
     }
 }

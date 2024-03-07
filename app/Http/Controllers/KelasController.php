@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Kelas;
+use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreKelasRequest;
 use App\Http\Requests\UpdateKelasRequest;
 
@@ -13,7 +15,9 @@ class KelasController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Kelas/Index', [
+            'kelas' => Kelas::paginate(10),
+        ]);
     }
 
     /**
@@ -29,7 +33,9 @@ class KelasController extends Controller
      */
     public function store(StoreKelasRequest $request)
     {
-        //
+        $kelas = Kelas::create($request->all());
+
+        return redirect(route('Admin.Kelas.index'))->with('success', 'Berhasil Di Tambah');
     }
 
     /**
@@ -37,7 +43,9 @@ class KelasController extends Controller
      */
     public function show(Kelas $kelas)
     {
-        //
+        return Inertia::render('Admin/Kelas/Show', [
+            'kelas' => Kelas::find(Request::input('slug')),
+        ]);
     }
 
     /**
@@ -53,7 +61,9 @@ class KelasController extends Controller
      */
     public function update(UpdateKelasRequest $request, Kelas $kelas)
     {
-        //
+        $kelas = Kelas::find(Request::input('slug'))->update($request->all());
+
+        return redirect(route('Admin.Kelas.index'))->with('success', 'Berhasil Di Edit');
     }
 
     /**
@@ -61,6 +71,8 @@ class KelasController extends Controller
      */
     public function destroy(Kelas $kelas)
     {
-        //
+         $kelas = Kelas::find(Request::input('slug'))->delete();
+
+        return redirect(route('Admin.Kelas.index'))->with('success', 'Berhasil Di hapus');
     }
 }

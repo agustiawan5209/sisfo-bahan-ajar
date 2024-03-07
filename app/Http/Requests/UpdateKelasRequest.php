@@ -22,7 +22,8 @@ class UpdateKelasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama'=> 'sometimes|required|string|unique:kelas,nama'
+
         ];
     }
 }

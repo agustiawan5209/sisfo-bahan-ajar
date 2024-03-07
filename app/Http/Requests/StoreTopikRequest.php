@@ -22,7 +22,7 @@ class StoreTopikRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama'=> 'required|string|unique:kelas,nama'
         ];
     }
 }
