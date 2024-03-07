@@ -13,7 +13,7 @@
             <Link
                 class="md:block text-left md:pb-2 text-secondary mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                 href="/">
-            Vue Notus
+            Home
             </Link>
             <!-- User -->
             <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -32,7 +32,7 @@
                             <Link
                                 class="md:block text-left md:pb-2 text-secondary mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                                 href="/">
-                            Vue Notus
+                            Home
                             </Link>
                         </div>
                         <div class="w-6/12 flex justify-end">
@@ -55,42 +55,47 @@
                 <!-- Divider -->
                 <hr class="my-4 md:min-w-full" />
                 <!-- Heading -->
-                <h6 class="md:min-w-full text-secondary text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-                    Admin Layout Pages
+                <h6 class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+                    Data Siswa Pages
                 </h6>
                 <!-- Navigation -->
 
                 <ul class="md:flex-col md:min-w-full flex flex-col list-none">
                     <li class="items-center">
-                        <Link href="#dashboard">
-                        <a href=":javascript(0)" class="text-xs uppercase py-3 font-bold block">
-                            Dashboard
-                        </a>
-                        </Link>
+                        <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
+                                <font-awesome-icon :icon="['fas', 'home']" />
+                                Dashboard
+                            </span>
+                        </NavLink>
                     </li>
 
                     <li class="items-center">
-                        <Link href="#settings">
-                        <a href=":javascript(0)" class="text-xs uppercase py-3 font-bold block">
-                            Settings
-                        </a>
-                        </Link>
+                        <NavLink :href="route('Guru.Siswa.index')" :active="route().current('Guru.Siswa.index')">
+                            <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
+                                <font-awesome-icon :icon="['fas', 'school']" />
+                                Data Siswa
+                            </span>
+                        </NavLink>
                     </li>
 
                     <li class="items-center">
-                        <Link href="#tables">
-                        <a href=":javascript(0)" class="text-xs uppercase py-3 font-bold block">
-                            Tables
-                        </a>
-                        </Link>
+                        <NavLink href="#tables">
+                            <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
+                                <font-awesome-icon :icon="['fas', 'table']" />
+
+                                Tables
+                            </span>
+                        </NavLink>
                     </li>
 
                     <li class="items-center">
-                        <Link href="#maps">
-                        <a href=":javascript(0)" class="text-xs uppercase py-3 font-bold block">
-                            Maps
-                        </a>
-                        </Link>
+                        <NavLink href="#maps">
+                            <span href=":javascript(0)" class="text-xs uppercase py-3 font-bold inline-flex gap-2">
+                                <font-awesome-icon :icon="['fas', 'map-location']" />
+                                Maps
+                            </span>
+                        </NavLink>
                     </li>
                 </ul>
 
@@ -103,6 +108,7 @@
 
 <script>
 import UserDropdown from "@/Components/DropdownNavbar.vue";
+import NavLink from "@/Components/NavLink.vue";
 import { Link } from '@inertiajs/vue3'
 export default {
     data() {
@@ -119,6 +125,7 @@ export default {
     components: {
         UserDropdown,
         Link,
+        NavLink,
     },
 };
 </script>
