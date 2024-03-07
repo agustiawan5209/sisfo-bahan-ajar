@@ -12,8 +12,8 @@
         <div class="block w-full overflow-x-auto px-2 py-2 rounded-lg ">
             <div
                 class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-                <div>
-                    <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
+                <div v-if="filter" >
+                    <button  id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
                         class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 "
                         type="button">
                         <svg class="w-3 h-3 text-gray-500 = me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -94,6 +94,9 @@
                         class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Search for items">
                 </div>
+                <div class="relative">
+                    <slot name="add" />
+                </div>
             </div>
             <!-- Projects table -->
             <table class="items-center w-full bg-transparent border-collapse table">
@@ -118,9 +121,19 @@
 <script setup>
 import { ref, defineProps, watch } from 'vue';
 import PaginationLink from '../PaginationLink.vue';
+import PrimaryButton from '../PrimaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps(['datalink', 'url',])
+const props = defineProps(['datalink', 'url',], {
+    filter: {
+        type: Boolean,
+        default: false,
+    },
+    tambah: {
+        type: Boolean,
+        default: false,
+    },
+})
 
 const Form = useForm({
     search: '',
