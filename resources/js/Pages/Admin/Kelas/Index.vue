@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import CardTable from "@/Components/Cards/CardTable.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { ref, defineProps } from 'vue';
 
 const props = defineProps({
@@ -23,6 +24,10 @@ const props = defineProps({
             <CardTable :datalink="kelas" :url="'Admin.Kelas.index'">
                 <template #title>
                     Data Kelas
+                </template>
+                <template #add>
+                    <PrimaryButton type="button" class="bg-primary">Tambah</PrimaryButton>
+
                 </template>
 
                 <template #header>
