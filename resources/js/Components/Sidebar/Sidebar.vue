@@ -15,10 +15,10 @@ const user = usePage().props.auth;
 console.log(user)
 
 
-function role_exist(role){
-    if(user.role.indexOf(role) !== -1){
+function role_exist(role) {
+    if (user.role.indexOf(role) !== -1) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
@@ -96,6 +96,27 @@ function role_exist(role){
                         </NavLink>
                     </li>
 
+                    <!-- Route Admin -->
+                    <li class="items-center" v-if="role_exist('admin')">
+                        <NavLink :href="route('Admin.Kelas.index')">
+                            <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
+                                <font-awesome-icon :icon="['fas', 'table']" />
+
+                                Kelas
+                            </span>
+                        </NavLink>
+                    </li>
+                    <li class="items-center" v-if="role_exist('admin')">
+                        <NavLink :href="route('Admin.Topik.index')">
+                            <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
+                                <font-awesome-icon :icon="['fas', 'table']" />
+
+                                Mata Pelajaran
+                            </span>
+                        </NavLink>
+                    </li>
+                    <!-- Route Guru -->
+
                     <li class="items-center" v-if="role_exist('guru')">
                         <NavLink :href="route('Guru.Siswa.index')" :active="route().current('Guru.Siswa.index')">
                             <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
@@ -105,15 +126,7 @@ function role_exist(role){
                         </NavLink>
                     </li>
 
-                    <li class="items-center"  v-if="role_exist('admin')">
-                        <NavLink :href="route('Admin.Kelas.index')">
-                            <span class="text-xs uppercase py-3 font-bold inline-flex gap-2">
-                                <font-awesome-icon :icon="['fas', 'table']" />
 
-                                Kelas
-                            </span>
-                        </NavLink>
-                    </li>
 
                     <li class="items-center">
                         <NavLink href="#maps">
@@ -130,6 +143,3 @@ function role_exist(role){
         </div>
     </nav>
 </template>
-
-
-

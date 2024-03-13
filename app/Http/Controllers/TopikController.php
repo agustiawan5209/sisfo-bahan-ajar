@@ -10,13 +10,15 @@ use App\Http\Requests\UpdateTopikRequest;
 
 class TopikController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
         return Inertia::render('Admin/Topik/Index', [
-            'kelas' => Topik::paginate(10),
+            'topik' => Topik::when(Request::input('search') ?? null, function ($query, $search) {
+                $query->where('nama', 'LIKE', '%' . $search . '%');
+            })->orderBy('id', 'desc')->paginate(10),
         ]);
     }
 
@@ -61,7 +63,7 @@ class TopikController extends Controller
      */
     public function update(UpdateTopikRequest $request, Topik $topik)
     {
-        $topik = Topik::find(Request::input('slug'))->update($request->all());
+        $topik = Topik::find(Request::input('id'))->update($request->all());
 
         return redirect(route('Admin.Topik.index'))->with('success', 'Berhasil Di Edit');
     }
@@ -71,7 +73,7 @@ class TopikController extends Controller
      */
     public function destroy(Topik $topik)
     {
-         $topik = Topik::find(Request::input('slug'))->delete();
+        $topik = Topik::find(Request::input('id'))->delete();
 
         return redirect(route('Admin.Topik.index'))->with('success', 'Berhasil Di hapus');
     }
