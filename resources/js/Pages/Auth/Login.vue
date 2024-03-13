@@ -201,11 +201,11 @@ const submit = () => {
 
                     <form @submit.prevent="submit()" method="POST" class="space-y-4">
                         <!-- Your form elements go here -->
-                        <div>
+                        <!-- <div>
                             <InputLabel for="username" class="block text-sm font-medium text-gray-700">Username</InputLabel>
                             <TextInput type="text" id="username" name="username"
                                 class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"/>
-                        </div>
+                        </div> -->
                         <div>
                             <InputLabel for="email" class="block text-sm font-medium text-gray-700">Email</InputLabel>
                             <TextInput v-model="form.email" type="text" id="email" name="email"

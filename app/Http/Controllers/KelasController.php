@@ -18,7 +18,8 @@ class KelasController extends Controller
         return Inertia::render('Admin/Kelas/Index', [
             'kelas' => Kelas::when(Request::input('search') ?? null, function($query,$search){
                 $query->where('nama','LIKE','%'.$search.'%');
-            })->paginate(10),
+            })->orderBy('id', 'desc')->paginate(10),
+            // 'edit'=> Request::input('slug'),
         ]);
     }
 
@@ -63,7 +64,7 @@ class KelasController extends Controller
      */
     public function update(UpdateKelasRequest $request, Kelas $kelas)
     {
-        $kelas = Kelas::find(Request::input('slug'))->update($request->all());
+        $kelas = Kelas::find(Request::input('id'))->update($request->all());
 
         return redirect(route('Admin.Kelas.index'))->with('success', 'Berhasil Di Edit');
     }
@@ -73,7 +74,7 @@ class KelasController extends Controller
      */
     public function destroy(Kelas $kelas)
     {
-         $kelas = Kelas::find(Request::input('slug'))->delete();
+         $kelas = Kelas::find(Request::input('id'))->delete();
 
         return redirect(route('Admin.Kelas.index'))->with('success', 'Berhasil Di hapus');
     }

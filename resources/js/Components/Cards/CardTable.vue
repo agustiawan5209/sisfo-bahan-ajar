@@ -12,7 +12,7 @@
         <div class="block w-full overflow-x-auto px-2 py-2 rounded-lg ">
             <div
                 class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-                <div v-if="filter" >
+                <div v-show="filterdata" >
                     <button  id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
                         class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 "
                         type="button">
@@ -124,15 +124,8 @@ import PaginationLink from '../PaginationLink.vue';
 import PrimaryButton from '../PrimaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps(['datalink', 'url',], {
-    filter: {
-        type: Boolean,
-        default: false,
-    },
-    tambah: {
-        type: Boolean,
-        default: false,
-    },
+const props = defineProps(['datalink', 'url','filterdata'], {
+
 })
 
 const Form = useForm({
